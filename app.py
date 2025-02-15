@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("حاسبة كمية البوتاس")
+st.title("كمية البوتاس")
 
 # مربع إدخال "معدل التحميل"
 loading_rate_str = st.text_input("معدل التحميل (طن/ساعة):")  # استخدام st.text_input
