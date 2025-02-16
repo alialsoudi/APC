@@ -1,7 +1,7 @@
 import streamlit as st
 import base64
 
-st.title("كمية البوتاس")
+st.title("كمية البوتاس المتبقية")
 
 # تحويل الصورة إلى base64 (إذا كنت تستخدم بايثون)
 with open("APC_LOGO.jpg", "rb") as image_file:  # افتح الصورة في وضع البايت
