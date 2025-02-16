@@ -10,7 +10,7 @@ with open("APC_LOGO.jpg", "rb") as image_file:  # افتح الصورة في و�
 # عرض الصورة في Streamlit0
 st.markdown(
     f"""
-    <img src="data:image/png;base64,{encoded_string}" width="200">  """,  # تضمين الصورة في HTML
+    <img src="data:image/jpg;base64,{encoded_string}" width="200">  """,  # تضمين الصورة في HTML
     unsafe_allow_html=True,
 )
 
