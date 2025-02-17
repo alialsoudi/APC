@@ -9,8 +9,10 @@ if st.button("احسب"):
     if loading_rate_str and location_input_str:  # Check if both inputs are filled
         try:
             loading_rate = float(loading_rate_str)
-            location = float(location_input_str)
-            if loading_rate > 0 and location > 0:
+            location_input = float(location_input_str)
+            location = location_input + 100  # Add 100 to the location
+
+            if loading_rate > 0 and location_input > 0:
                 BELT_SPEED = 2.75
                 POTASH_DENSITY = 1500
 
