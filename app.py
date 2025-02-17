@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("حاسبة كمية البوتاس المتبقية")
+st.title("كمية البوتاس المتبقية")
 
 loading_rate_str = st.text_input("معدل التحميل (طن/ساعة):")
 location_input_str = st.text_input("الموقع (متر):")
