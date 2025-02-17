@@ -2,6 +2,7 @@ import streamlit as st
 
 st.title("حاسبة كمية البوتاس المتبقية")
 
+# التطبيق الرئيسي
 loading_rate_str = st.text_input("معدل التحميل (طن/ساعة):")
 location_input_str = st.text_input("الموقع (متر):")
 
@@ -31,12 +32,7 @@ if st.button("احسب"):
     else:
         st.error("الرجاء إدخال قيم لمعدل التحميل والموقع.")
 
-# حقوق الملكية
-st.markdown(
-    """
-    <div style="text-align: center; font-size: 14px; color: gray;">
-        جميع الحقوق محفوظة &copy; 2025 علي السعودي
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
+# زر للانتقال إلى صفحة المطور
+if st.button("صفحة المطور"):
+    st.session_state.page = "developer"  # تخزين حالة الصفحة في session_state
+    st.experimental_rerun()  # إعادة تشغيل التطبيق لعرض الصفحة الجديدة
