@@ -1,35 +1,36 @@
 import streamlit as st
 
-# تنسيقات CSS مخصصة
+# Custom CSS for styling
 st.markdown(
     """
     <style>
     body {
         font-family: sans-serif;
-        background-color: #f0f0f0;
+        background-color: #f0f0f0; /* Light gray background */
     }
     .main .block-container {
-        max-width: 800px;
+        max-width: 800px; /* Adjust as needed */
         padding-top: 3rem;
         padding-bottom: 3rem;
     }
     .stButton>button {
-        background-color: #4CAF50;
+        background-color: #4CAF50; /* Green button */
         color: white;
     }
     .stTextInput, .stNumberInput {
         margin-bottom: 1rem;
     }
+    /* Add more styles as needed */
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-# عنوان التطبيق مع توسيط النص
+
 st.title("حاسبة كمية البوتاس المتبقية")
 
-# حاوية لمربعات الإدخال مع توسيط المحتوى
-col1, col2, col3 = st.columns([1, 2, 1])
+col1, col2, col3 = st.columns([1, 2, 1])  # Center the input fields
+
 with col2:
     loading_rate = st.number_input("معدل التحميل (طن/ساعة):", min_value=0.0, step=0.1)
     location = st.number_input("الموقع (متر):", min_value=0.0, step=1.0)
@@ -49,7 +50,7 @@ with col2:
         else:
             st.error("الرجاء إدخال قيم صحيحة لمعدل التحميل والموقع.")
 
-# حقوق الملكية مع توسيط النص
+
 st.markdown(
     """
     <div style="text-align: center; font-size: 14px; color: gray;">
