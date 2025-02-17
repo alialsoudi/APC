@@ -1,77 +1,35 @@
 import streamlit as st
 
-# Custom CSS for styling
-st.markdown(
-    """
-    <style>
-    body {
-        font-family: sans-serif; /* Change font */
-        background-color: #f0f0f0; /* Light gray background */
-    }
-    .main .block-container {
-        max-width: 800px; /* Adjust as needed */
-        padding-top: 3rem;
-        padding-bottom: 3rem;
-    }
-    .stButton>button {
-        background-color: #4CAF50; /* Green button */
-        color: white;
-    }
-    .stTextInput, .stNumberInput {
-        margin-bottom: 1rem;
-    }
-    .stTitle {
-        font-size: 2rem !important; /* Increased title font size */
-        text-align: center; /* Center the title */
-    }
-    .stNumberInput label, .stTextInput label { /* Target labels for input fields */
-        font-size: 1.2rem; /* Increase label font size */
-    }
-    .stNumberInput input, .stTextInput input { /* Target input fields */
-        font-size: 1.2rem; /* Increase input font size */
-    }
-    p { /* Target paragraphs (including the result) */
-        font-size: 1.2rem; /* Increase result font size */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
 st.title("حاسبة كمية البوتاس المتبقية")
 
-# Use columns for centering
-col1, col2, col3 = st.columns([1, 2, 1])
+loading_rate_str = st.text_input("معدل التحميل (طن/ساعة):")
+location_input_str = st.text_input("الموقع (متر):")
 
-with col2:
-    loading_rate = st.text_input("معدل التحميل (طن/ساعة):")
-    location = st.text_input("الموقع (متر):")
+if st.button("احسب"):
+    if loading_rate_str and location_input_str:  # Check if both inputs are filled
+        try:
+            loading_rate = float(loading_rate_str)
+            location = float(location_input_str)
+            if loading_rate > 0 and location > 0:
+                BELT_SPEED = 2.75
+                POTASH_DENSITY = 1500
 
-    if st.button("احسب"):
-        if loading_rate and location:  # Check if both inputs are filled
-            try:
-                loading_rate = float(loading_rate)
-                location = float(location)
-                if loading_rate > 0 and location > 0:
-                    BELT_SPEED = 2.75
-                    POTASH_DENSITY = 1500
+                loading_rate_kg_per_sec = loading_rate * 1000 / 3600
+                cross_sectional_area = loading_rate_kg_per_sec / (POTASH_DENSITY * BELT_SPEED)
+                remaining_potash_volume = cross_sectional_area * location
+                remaining_potash_mass = remaining_potash_volume * POTASH_DENSITY
+                remaining_potash_tons = remaining_potash_mass / 1000
 
-                    loading_rate_kg_per_sec = loading_rate * 1000 / 3600
-                    cross_sectional_area = loading_rate_kg_per_sec / (POTASH_DENSITY * BELT_SPEED)
-                    remaining_potash_volume = cross_sectional_area * location
-                    remaining_potash_mass = remaining_potash_volume * POTASH_DENSITY
-                    remaining_potash_tons = remaining_potash_mass / 1000
+                st.write(f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن")
+            else:
+                st.error("الرجاء إدخال قيم صحيحة لمعدل التحميل والموقع (أكبر من صفر).")
 
-                    st.write(f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن")
-                else:
-                    st.error("الرجاء إدخال قيم صحيحة لمعدل التحميل والموقع (أكبر من صفر).")
+        except ValueError:
+            st.error("الرجاء إدخال أرقام صحيحة.")
+    else:
+        st.error("الرجاء إدخال قيم لمعدل التحميل والموقع.")
 
-            except ValueError:
-                st.error("الرجاء إدخال أرقام صحيحة.")
-        else:
-            st.error("الرجاء إدخال قيم لمعدل التحميل والموقع.")
-
-# Copyright notice
+# حقوق الملكية
 st.markdown(
     """
     <div style="text-align: center; font-size: 14px; color: gray;">
