@@ -17,18 +17,17 @@ st.markdown(
         background-color: #4CAF50;
         color: white;
     }
-    .stTextInput, .stNumberInput, .stButton>button, p { /* Select input fields, button, and paragraphs */
-        font-size: 1.2rem; /* Increase font size */
+    .stTextInput, .stNumberInput, .stButton>button, p {
+        font-size: 1.2rem; /* Increased font size for inputs, button, and paragraphs */
     }
-    .stTitle { /* Select the title */
-        font-size: 2rem; /* Increase title font size */
+    .stTitle {
+        font-size: 2rem; /* Increased title font size */
+        text-align: center; /* Center the title */
     }
-
     </style>
     """,
     unsafe_allow_html=True,
 )
-
 
 st.title("حاسبة كمية البوتاس المتبقية")
 
