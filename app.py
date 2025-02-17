@@ -5,24 +5,33 @@ st.markdown(
     """
     <style>
     body {
-        font-family: sans-serif;
-        background-color: #f0f0f0;
+        font-family: sans-serif; /* Change font */
+        background-color: #f0f0f0; /* Light gray background */
     }
     .main .block-container {
-        max-width: 800px;
+        max-width: 800px; /* Adjust as needed */
         padding-top: 3rem;
         padding-bottom: 3rem;
     }
     .stButton>button {
-        background-color: #4CAF50;
+        background-color: #4CAF50; /* Green button */
         color: white;
     }
-    .stTextInput, .stNumberInput, .stButton>button, p {
-        font-size: 1.2rem; /* Increased font size for inputs, button, and paragraphs */
+    .stTextInput, .stNumberInput {
+        margin-bottom: 1rem;
     }
     .stTitle {
-        font-size: 2rem; /* Increased title font size */
+        font-size: 2rem !important; /* Increased title font size */
         text-align: center; /* Center the title */
+    }
+    .stNumberInput label, .stTextInput label { /* Target labels for input fields */
+        font-size: 1.2rem; /* Increase label font size */
+    }
+    .stNumberInput input, .stTextInput input { /* Target input fields */
+        font-size: 1.2rem; /* Increase input font size */
+    }
+    p { /* Target paragraphs (including the result) */
+        font-size: 1.2rem; /* Increase result font size */
     }
     </style>
     """,
@@ -31,7 +40,8 @@ st.markdown(
 
 st.title("حاسبة كمية البوتاس المتبقية")
 
-col1, col2, col3 = st.columns([1, 2, 1])  # Center the input fields
+# Use columns for centering
+col1, col2, col3 = st.columns([1, 2, 1])
 
 with col2:
     loading_rate = st.text_input("معدل التحميل (طن/ساعة):")
@@ -61,7 +71,7 @@ with col2:
         else:
             st.error("الرجاء إدخال قيم لمعدل التحميل والموقع.")
 
-
+# Copyright notice
 st.markdown(
     """
     <div style="text-align: center; font-size: 14px; color: gray;">
