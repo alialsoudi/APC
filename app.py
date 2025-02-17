@@ -5,20 +5,20 @@ st.markdown(
     """
     <style>
     body {
-        font-family: sans-serif; /* تغيير نوع الخط */
-        background-color: #f0f0f0; /* تغيير لون الخلفية */
+        font-family: sans-serif;
+        background-color: #f0f0f0;
     }
     .main .block-container {
-        max-width: 800px; /* تحديد عرض أقصى للحاوية الرئيسية */
-        padding-top: 3rem; /* إضافة مساحة أعلى الحاوية */
-        padding-bottom: 3rem; /* إضافة مساحة أسفل الحاوية */
+        max-width: 800px;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
     }
     .stButton>button {
-        background-color: #4CAF50; /* تغيير لون زر "احسب" */
-        color: white; /* تغيير لون نص زر "احسب" */
+        background-color: #4CAF50;
+        color: white;
     }
     .stTextInput, .stNumberInput {
-        margin-bottom: 1rem; /* إضافة مساحة أسفل مربعات الإدخال */
+        margin-bottom: 1rem;
     }
     </style>
     """,
