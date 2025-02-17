@@ -20,11 +20,10 @@ if st.button("احسب"):
     else:
         st.error("الرجاء إدخال قيم صحيحة لمعدل التحميل والموقع.")
 
-# إضافة حقوق الملكية باستخدام HTML و CSS
 st.markdown(
     """
     <div style="text-align: center; font-size: 14px; color: gray;">
-        جميع الحقوق محفوظة &copy; 2024 علي السعودي
+        جميع الحقوق محفوظة &copy; 2025 علي السعودي
     </div>
     """,
     unsafe_allow_html=True,
