@@ -2,34 +2,25 @@ import streamlit as st
 
 st.title("حاسبة كمية البوتاس المتبقية")
 
-loading_rate_str = st.text_input("معدل التحميل (طن/ساعة):")
-location_input_str = st.text_input("الموقع (متر):")
+# خانات إدخال لجميع المعطيات مع قيم افتراضية
+loading_rate = st.number_input("معدل التحميل (طن/ساعة):", value=10.0, step=0.1)  # قيمة افتراضية 10.0
+location_input = st.number_input("الموقع (متر):", value=50.0, step=1.0)  # قيمة افتراضية 50.0
+BELT_SPEED = st.number_input("سرعة القشاط (متر/ثانية):", value=2.75, step=0.01)  # قيمة افتراضية 2.75
+POTASH_DENSITY = st.number_input("كثافة البوتاس (كجم/متر مكعب):", value=1500.0, step=10.0)  # قيمة افتراضية 1500.0
 
 if st.button("احسب"):
-    if loading_rate_str and location_input_str:  # Check if both inputs are filled
-        try:
-            loading_rate = float(loading_rate_str)
-            location_input = float(location_input_str)
-            location = location_input + 100  # Add 100 to the location
+    location = location_input + 100  # إضافة 100 إلى الموقع
 
-            if loading_rate > 0 and location_input > 0:
-                BELT_SPEED = 2.75
-                POTASH_DENSITY = 1500
+    if loading_rate > 0 and location_input > 0:
+        loading_rate_kg_per_sec = loading_rate * 1000 / 3600
+        cross_sectional_area = loading_rate_kg_per_sec / (POTASH_DENSITY * BELT_SPEED)
+        remaining_potash_volume = cross_sectional_area * location
+        remaining_potash_mass = remaining_potash_volume * POTASH_DENSITY
+        remaining_potash_tons = remaining_potash_mass / 1000
 
-                loading_rate_kg_per_sec = loading_rate * 1000 / 3600
-                cross_sectional_area = loading_rate_kg_per_sec / (POTASH_DENSITY * BELT_SPEED)
-                remaining_potash_volume = cross_sectional_area * location
-                remaining_potash_mass = remaining_potash_volume * POTASH_DENSITY
-                remaining_potash_tons = remaining_potash_mass / 1000
-
-                st.write(f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن")
-            else:
-                st.error("الرجاء إدخال قيم صحيحة لمعدل التحميل والموقع (أكبر من صفر).")
-
-        except ValueError:
-            st.error("الرجاء إدخال أرقام صحيحة.")
+        st.write(f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن")
     else:
-        st.error("الرجاء إدخال قيم لمعدل التحميل والموقع.")
+        st.error("الرجاء إدخال قيم صحيحة لمعدل التحميل والموقع (أكبر من صفر).")
 
 # حقوق الملكية
 st.markdown(
