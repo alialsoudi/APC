@@ -2,14 +2,13 @@ import streamlit as st
 
 st.title("حاسبة كمية البوتاس المتبقية")
 
-# خانات إدخال لجميع المعطيات مع قيم افتراضية
-loading_rate = st.number_input("معدل التحميل (طن/ساعة):", value=10.0, step=0.1)  # قيمة افتراضية 10.0
-location_input = st.number_input("الموقع (متر):", value=50.0, step=1.0)  # قيمة افتراضية 50.0
-BELT_SPEED = st.number_input("سرعة القشاط (متر/ثانية):", value=2.75, step=0.01)  # قيمة افتراضية 2.75
-POTASH_DENSITY = st.number_input("كثافة البوتاس (كجم/متر مكعب):", value=1500.0, step=10.0)  # قيمة افتراضية 1500.0
+loading_rate = st.number_input("معدل التحميل (طن/ساعة):", value=10.0, step=0.1)
+location_input = st.number_input("الموقع (متر):", value=50.0, step=1.0)
+BELT_SPEED = st.number_input("سرعة القشاط (متر/ثانية):", value=2.75, step=0.01)
+POTASH_DENSITY = st.number_input("كثافة البوتاس (كجم/متر مكعب):", value=1500.0, step=10.0)
 
 if st.button("احسب"):
-    location = location_input + 100  # إضافة 100 إلى الموقع
+    location = location_input + 100
 
     if loading_rate > 0 and location_input > 0:
         loading_rate_kg_per_sec = loading_rate * 1000 / 3600
@@ -22,7 +21,6 @@ if st.button("احسب"):
     else:
         st.error("الرجاء إدخال قيم صحيحة لمعدل التحميل والموقع (أكبر من صفر).")
 
-# حقوق الملكية
 st.markdown(
     """
     <div style="text-align: center; font-size: 14px; color: gray;">
