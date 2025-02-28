@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("حاسبة كمية البوتاس المتبقية")
+st.title(" كمية البوتاس المتبقية")
 
 # خانات إدخال لجميع المعطيات مع قيم افتراضية
 loading_rate = st.number_input("معدل التحميل (طن/ساعة):", value=1500.0, step=1.0)
