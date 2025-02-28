@@ -3,10 +3,10 @@ import streamlit as st
 st.title("حاسبة كمية البوتاس المتبقية")
 
 # خانات إدخال لجميع المعطيات مع قيم افتراضية
+POTASH_DENSITY = st.number_input("كثافة البوتاس (كجم/متر مكعب):", value=1500.0, step=1.0)
 loading_rate = st.number_input("معدل التحميل (طن/ساعة):", value=1500.0, step=1.0)
 location_input = st.number_input("الموقع (متر):", value=250.0, step=1.0)
 BELT_SPEED = st.number_input("سرعة القشاط (متر/ثانية):", value=2.75, step=0.01)
-POTASH_DENSITY = st.number_input("كثافة البوتاس (كجم/متر مكعب):", value=1500.0, step=1.0)
 
 if st.button("احسب"):
     location = location_input + 100
