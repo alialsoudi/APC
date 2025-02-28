@@ -2,25 +2,39 @@ import streamlit as st
 
 st.title("حاسبة كمية البوتاس المتبقية")
 
-# خانات إدخال لجميع المعطيات مع قيم افتراضية
-loading_rate = st.number_input("معدل التحميل (طن/ساعة):", value=10.0, step=0.1)
-location_input = st.number_input("الموقع (متر):", value=50.0, step=1.0)
-BELT_SPEED = st.number_input("سرعة القشاط (متر/ثانية):", value=2.75, step=0.01)
-POTASH_DENSITY = st.number_input("كثافة البوتاس (كجم/متر مكعب):", value=1500.0, step=10.0)
+# خانات إدخال لجميع المعطيات - فارغة
+loading_rate_str = st.text_input("معدل التحميل (طن/ساعة):")
+location_input_str = st.text_input("الموقع (متر):")
+BELT_SPEED_str = st.text_input("سرعة القشاط (متر/ثانية):")
+POTASH_DENSITY_str = st.text_input("كثافة البوتاس (كجم/متر مكعب):")
 
 if st.button("احسب"):
-    location = location_input + 100
+    # التحقق من أن جميع الخانات ليست فارغة
+    if loading_rate_str and location_input_str and BELT_SPEED_str and POTASH_DENSITY_str:
+        try:
+            # تحويل القيم المدخلة إلى أرقام
+            loading_rate = float(loading_rate_str)
+            location_input = float(location_input_str)
+            BELT_SPEED = float(BELT_SPEED_str)
+            POTASH_DENSITY = float(POTASH_DENSITY_str)
 
-    if loading_rate > 0 and location_input > 0:
-        loading_rate_kg_per_sec = loading_rate * 1000 / 3600
-        cross_sectional_area = loading_rate_kg_per_sec / (POTASH_DENSITY * BELT_SPEED)
-        remaining_potash_volume = cross_sectional_area * location
-        remaining_potash_mass = remaining_potash_volume * POTASH_DENSITY
-        remaining_potash_tons = remaining_potash_mass / 1000
+            location = location_input + 100  # إضافة 100 إلى الموقع
 
-        st.write(f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن")
+            if loading_rate > 0 and location_input > 0 and BELT_SPEED > 0 and POTASH_DENSITY > 0:
+                loading_rate_kg_per_sec = loading_rate * 1000 / 3600
+                cross_sectional_area = loading_rate_kg_per_sec / (POTASH_DENSITY * BELT_SPEED)
+                remaining_potash_volume = cross_sectional_area * location
+                remaining_potash_mass = remaining_potash_volume * POTASH_DENSITY
+                remaining_potash_tons = remaining_potash_mass / 1000
+
+                st.write(f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن")
+            else:
+                st.error("الرجاء إدخال قيم صحيحة (أكبر من صفر).")
+
+        except ValueError:
+            st.error("الرجاء إدخال أرقام صحيحة.")
     else:
-        st.error("الرجاء إدخال قيم صحيحة لمعدل التحميل والموقع (أكبر من صفر).")
+        st.error("الرجاء إدخال جميع القيم.")
 
 # حقوق الملكية
 st.markdown(
