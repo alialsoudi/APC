@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title(" كمية البوتاس المتبقية")
+st.title("حاسبة كمية البوتاس المتبقية")
 
 # خانات إدخال لجميع المعطيات مع قيم افتراضية
 loading_rate = st.number_input("معدل التحميل (طن/ساعة):", value=1500.0, step=1.0)
@@ -13,7 +13,10 @@ if st.button("احسب"):
 
     if loading_rate > 0 and location_input > 0 and BELT_SPEED > 0 and POTASH_DENSITY > 0:
         loading_rate_kg_per_sec = loading_rate * 1000 / 3600
-        remaining_potash_tons = (loading_rate_kg_per_sec * location) / (BELT_SPEED * 1000)
+        cross_sectional_area = loading_rate_kg_per_sec / (POTASH_DENSITY * BELT_SPEED)
+        remaining_potash_volume = cross_sectional_area * location
+        remaining_potash_mass = remaining_potash_volume * POTASH_DENSITY
+        remaining_potash_tons = remaining_potash_mass / 1000
 
         st.write(f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن")
     else:
