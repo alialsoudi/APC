@@ -18,7 +18,12 @@ if st.button("احسب"):
         remaining_potash_mass = remaining_potash_volume * POTASH_DENSITY
         remaining_potash_tons = remaining_potash_mass / 1000
 
-        st.write(f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن")
+        # عرض جميع القيم
+        st.write(f"معدل التحميل (كجم/ثانية): {loading_rate_kg_per_sec:.2f}")
+        st.write(f"مساحة المقطع العرضي (متر مربع): {cross_sectional_area:.4f}")
+        st.write(f"حجم البوتاس المتبقي (متر مكعب): {remaining_potash_volume:.2f}")
+        st.write(f"كتلة البوتاس المتبقية (كجم): {remaining_potash_mass:.2f}")
+        st.write(f"كمية البوتاس المتبقية (طن): {remaining_potash_tons:.2f}")
     else:
         st.error("الرجاء إدخال قيم صحيحة (أكبر من صفر).")
 
