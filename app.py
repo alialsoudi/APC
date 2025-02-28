@@ -1,48 +1,35 @@
-import streamlit as st  # استيراد مكتبة Streamlit
+import streamlit as st
 
-# تحديد عنوان التطبيق
 st.title("حاسبة كمية البوتاس المتبقية")
 
-# مربع إدخال لمعدل التحميل (طن/ساعة) - فارغ افتراضياً
 loading_rate_str = st.text_input("معدل التحميل (طن/ساعة):")
-
-# مربع إدخال للموقع (متر) - فارغ افتراضياً
 location_input_str = st.text_input("الموقع (متر):")
 
-# زر "احسب"
-if st.button("احسب"):  # عند النقر على الزر
-
-    # التحقق من أن القيم المدخلة صحيحة (ليست فارغة وأكبر من صفر)
-    if loading_rate_str and location_input_str:
+if st.button("احسب"):
+    if loading_rate_str and location_input_str:  # Check if both inputs are filled
         try:
-            loading_rate = float(loading_rate_str)  # تحويل القيمة إلى رقم عشري
-            location_input = float(location_input_str)  # تحويل القيمة إلى رقم عشري
-            location = location_input + 100  # إضافة 100 إلى قيمة الموقع
+            loading_rate = float(loading_rate_str)
+            location_input = float(location_input_str)
+            location = location_input + 100  # Add 100 to the location
 
-            if loading_rate > 0 and location_input > 0:  # التأكد من أن القيم أكبر من صفر
-                BELT_SPEED = 2.75  # سرعة القشاط (متر/ثانية) - قيمة ثابتة
-                POTASH_DENSITY = 1500  # كثافة البوتاس (كجم/متر مكعب) - قيمة ثابتة
+            if loading_rate > 0 and location_input > 0:
+                BELT_SPEED = 2.75
+                POTASH_DENSITY = 1500
 
-                # حساب كمية البوتاس المتبقية (العمليات الحسابية)
-                loading_rate_kg_per_sec = loading_rate * 1000 / 3600  # تحويل معدل التحميل إلى كجم/ثانية
-                cross_sectional_area = loading_rate_kg_per_sec / (POTASH_DENSITY * BELT_SPEED)  # حساب مساحة المقطع العرضي
-                remaining_potash_volume = cross_sectional_area * location  # حساب حجم البوتاس المتبقي
-                remaining_potash_mass = remaining_potash_volume * POTASH_DENSITY  # حساب كتلة البوتاس المتبقية
-                remaining_potash_tons = remaining_potash_mass / 1000  # تحويل الكتلة إلى طن
+                loading_rate_kg_per_sec = loading_rate * 1000 / 3600
+                cross_sectional_area = loading_rate_kg_per_sec / (POTASH_DENSITY * BELT_SPEED)
+                remaining_potash_volume = cross_sectional_area * location
+                remaining_potash_mass = remaining_potash_volume * POTASH_DENSITY
+                remaining_potash_tons = remaining_potash_mass / 1000
 
-                # عرض النتيجة
-                st.write(f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن")  # عرض النتيجة مع تقريبها لرقمين عشريين
-
+                st.write(f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن")
             else:
-                # عرض رسالة خطأ إذا كانت القيم المدخلة غير صحيحة (أقل من أو يساوي صفر)
-                st.error("الرجاء إدخال قيم صحيحة لمعدل التحميل والموقع (أكبر من صفر).")  # رسالة خطأ للمستخدم
+                st.error("الرجاء إدخال قيم صحيحة لمعدل التحميل والموقع (أكبر من صفر).")
 
-        except ValueError:  # إذا لم يتم إدخال أرقام
-            st.error("الرجاء إدخال أرقام صحيحة.")  # رسالة خطأ للمستخدم
-
+        except ValueError:
+            st.error("الرجاء إدخال أرقام صحيحة.")
     else:
-        # عرض رسالة خطأ إذا كانت القيم المدخلة فارغة
-        st.error("الرجاء إدخال قيم لمعدل التحميل والموقع.")  # رسالة خطأ للمستخدم
+        st.error("الرجاء إدخال قيم لمعدل التحميل والموقع.")
 
 # حقوق الملكية
 st.markdown(
