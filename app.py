@@ -1,47 +1,45 @@
-import streamlit as st
+import dash
+from dash import dcc, html, Input, Output
 
-st.title("حاسبة كمية البوتاس المتبقية")
+app = dash.Dash(__name__)
 
-# خانات إدخال لجميع المعطيات - فارغة
-loading_rate_str = st.text_input("معدل التحميل (طن/ساعة):")
-location_input_str = st.text_input("الموقع (متر):")
-BELT_SPEED_str = st.text_input("سرعة القشاط (متر/ثانية):")
-POTASH_DENSITY_str = st.text_input("كثافة البوتاس (كجم/متر مكعب):")
+app.layout = html.Div([
+    html.H1("حاسبة كمية البوتاس المتبقية"),
 
-if st.button("احسب"):
-    # التحقق من أن جميع الخانات ليست فارغة
-    if loading_rate_str and location_input_str and BELT_SPEED_str and POTASH_DENSITY_str:
-        try:
-            # تحويل القيم المدخلة إلى أرقام
-            loading_rate = float(loading_rate_str)
-            location_input = float(location_input_str)
-            BELT_SPEED = float(BELT_SPEED_str)
-            POTASH_DENSITY = float(POTASH_DENSITY_str)
+    html.Label("معدل التحميل (طن/ساعة):"),
+    dcc.Input(id='loading_rate', type='number'),
 
-            location = location_input + 100  # إضافة 100 إلى الموقع
+    html.Label("الموقع (متر):"),
+    dcc.Input(id='location_input', type='number'),
 
-            if loading_rate > 0 and location_input > 0 and BELT_SPEED > 0 and POTASH_DENSITY > 0:
-                loading_rate_kg_per_sec = loading_rate * 1000 / 3600
-                cross_sectional_area = loading_rate_kg_per_sec / (POTASH_DENSITY * BELT_SPEED)
-                remaining_potash_volume = cross_sectional_area * location
-                remaining_potash_mass = remaining_potash_volume * POTASH_DENSITY
-                remaining_potash_tons = remaining_potash_mass / 1000
+    html.Label("سرعة القشاط (متر/ثانية):"),
+    dcc.Input(id='BELT_SPEED', type='number'),
 
-                st.write(f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن")
-            else:
-                st.error("الرجاء إدخال قيم صحيحة (أكبر من صفر).")
+    html.Label("كثافة البوتاس (كجم/متر مكعب):"),
+    dcc.Input(id='POTASH_DENSITY', type='number'),
 
-        except ValueError:
-            st.error("الرجاء إدخال أرقام صحيحة.")
-    else:
-        st.error("الرجاء إدخال جميع القيم.")
+    html.Button('احسب', id='calculate'),
 
-# حقوق الملكية
-st.markdown(
-    """
-    <div style="text-align: center; font-size: 14px; color: gray;">
-        جميع الحقوق محفوظة &copy; 2025 علي السعودي
-    </div>
-    """,
-    unsafe_allow_html=True,
+    html.Div(id='output')
+])
+
+@app.callback(
+    Output('output', 'children'),
+    Input('calculate', 'n_clicks'),
+    Input('loading_rate', 'value'),
+    Input('location_input', 'value'),
+    Input('BELT_SPEED', 'value'),
+    Input('POTASH_DENSITY', 'value')
 )
+def update_output(n_clicks, loading_rate, location_input, BELT_SPEED, POTASH_DENSITY):
+    if n_clicks:
+        location = location_input + 100
+        loading_rate_kg_per_sec = loading_rate * 1000 / 3600
+        cross_sectional_area = loading_rate_kg_per_sec / (POTASH_DENSITY * BELT_SPEED)
+        remaining_potash_volume = cross_sectional_area * location
+        remaining_potash_mass = remaining_potash_volume * POTASH_DENSITY
+        remaining_potash_tons = remaining_potash_mass / 1000
+        return f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن"
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
