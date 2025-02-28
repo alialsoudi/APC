@@ -1,45 +1,33 @@
-import dash
-from dash import dcc, html, Input, Output
+import streamlit as st
 
-app = dash.Dash(__name__)
+st.title("حاسبة كمية البوتاس المتبقية")
 
-app.layout = html.Div([
-    html.H1("حاسبة كمية البوتاس المتبقية"),
+# خانات إدخال لجميع المعطيات مع قيم افتراضية
+loading_rate = st.number_input("معدل التحميل (طن/ساعة):", value=1500.0, step=1.0)
+location_input = st.number_input("الموقع (متر):", value=250.0, step=1.0)
+BELT_SPEED = st.number_input("سرعة القشاط (متر/ثانية):", value=2.75, step=0.01)
+POTASH_DENSITY = st.number_input("كثافة البوتاس (كجم/متر مكعب):", value=1500.0, step=1.0)
 
-    html.Label("معدل التحميل (طن/ساعة):"),
-    dcc.Input(id='loading_rate', type='number'),
+if st.button("احسب"):
+    location = location_input + 100
 
-    html.Label("الموقع (متر):"),
-    dcc.Input(id='location_input', type='number'),
-
-    html.Label("سرعة القشاط (متر/ثانية):"),
-    dcc.Input(id='BELT_SPEED', type='number'),
-
-    html.Label("كثافة البوتاس (كجم/متر مكعب):"),
-    dcc.Input(id='POTASH_DENSITY', type='number'),
-
-    html.Button('احسب', id='calculate'),
-
-    html.Div(id='output')
-])
-
-@app.callback(
-    Output('output', 'children'),
-    Input('calculate', 'n_clicks'),
-    Input('loading_rate', 'value'),
-    Input('location_input', 'value'),
-    Input('BELT_SPEED', 'value'),
-    Input('POTASH_DENSITY', 'value')
-)
-def update_output(n_clicks, loading_rate, location_input, BELT_SPEED, POTASH_DENSITY):
-    if n_clicks:
-        location = location_input + 100
+    if loading_rate > 0 and location_input > 0 and BELT_SPEED > 0 and POTASH_DENSITY > 0:
         loading_rate_kg_per_sec = loading_rate * 1000 / 3600
         cross_sectional_area = loading_rate_kg_per_sec / (POTASH_DENSITY * BELT_SPEED)
         remaining_potash_volume = cross_sectional_area * location
         remaining_potash_mass = remaining_potash_volume * POTASH_DENSITY
         remaining_potash_tons = remaining_potash_mass / 1000
-        return f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن"
 
-if __name__ == '__main__':
-    app.run_server(debug=True)
+        st.write(f"كمية البوتاس المتبقية: {remaining_potash_tons:.2f} طن")
+    else:
+        st.error("الرجاء إدخال قيم صحيحة (أكبر من صفر).")
+
+# حقوق الملكية
+st.markdown(
+    """
+    <div style="text-align: center; font-size: 14px; color: gray;">
+        جميع الحقوق محفوظة &copy; 2025 علي السعودي
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
